@@ -2,7 +2,6 @@ import { Component, OnInit } from '@angular/core';
 import { Observable } from 'rxjs';
 import { Player } from '../models/player.model';
 import { PlayerService } from '../service/player-service.service';
-
 @Component({
   selector: 'app-players',
   templateUrl: './players.component.html',
@@ -12,10 +11,17 @@ export class PlayersPageComponent implements OnInit {
   constructor(private playerService: PlayerService) {}
 
   players$: Observable<Player[]> = new Observable();
+  displayedColumns: string[] = ['Name', 'Surname', 'Nationality', 'Overall'];
 
   ngOnInit(): void {
     this.players$ = this.playerService.getPlayers$();
+  }
 
-    this.players$.subscribe((x) => console.log(x));
+  addPlayer() {
+    this.playerService.addPlayer$();
+  }
+
+  deletePlayer() {
+    this.playerService.deletePlayer$();
   }
 }
