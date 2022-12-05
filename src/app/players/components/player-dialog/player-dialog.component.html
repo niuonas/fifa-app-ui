@@ -1,0 +1,16 @@
+<div mat-dialog-content>
+    <h1 mat-dialog-title> Enter data for the new player: </h1>
+    <mat-label>Name</mat-label>
+    <input matInput [(ngModel)]="player.name">
+    <mat-label>Surname</mat-label>
+    <input matInput [(ngModel)]="player.surname">
+    <mat-label>Nationality</mat-label>
+    <input matInput [(ngModel)]="player.nationality">
+    <mat-label>Overall</mat-label>
+    <input matInput [(ngModel)]="player.overall">
+</div>
+<div mat-dialog-actions>
+    <button mat-button (click)="onNoClick()">Cancel</button>
+    <button mat-button [mat-dialog-close]="player">Add</button>
+</div>
+

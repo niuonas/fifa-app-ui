@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { HttpClient } from '@angular/common/http';
+import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Observable } from 'rxjs';
 import { Player } from '../models/player.model';
 
@@ -12,8 +12,8 @@ export class PlayerService {
     return this.httpClient.get<Player[]>(this.PLAYERS_API_PATH);
   }
 
-  public addPlayer$() {
-    //this.httpClient.post(this.PLAYERS_API_PATH, player);
+  public addPlayer$(player: Player): Observable<Player> {
+    return this.httpClient.post<Player>(this.PLAYERS_API_PATH, player);
   }
 
   public deletePlayer$() {
