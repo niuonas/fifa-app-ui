@@ -9,6 +9,7 @@ import { MatButtonModule } from '@angular/material/button';
 import { PlayerDialogComponent } from './components/player-dialog/player-dialog.component';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { FormsModule } from '@angular/forms';
+import { MatIconModule } from '@angular/material/icon';
 
 @NgModule({
   declarations: [PlayersPageComponent, PlayerDialogComponent],
@@ -21,6 +22,7 @@ import { FormsModule } from '@angular/forms';
     MatButtonModule,
     MatFormFieldModule,
     FormsModule,
+    MatIconModule,
   ],
   exports: [PlayersPageComponent],
 })

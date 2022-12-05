@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ViewChild } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
 import { Observable } from 'rxjs';
 import { PlayerDialogComponent } from '../components/player-dialog/player-dialog.component';
@@ -12,9 +12,15 @@ import { PlayerService } from '../service/player-service.service';
 export class PlayersPageComponent implements OnInit {
   constructor(private playerService: PlayerService, public dialog: MatDialog) {}
 
-  players$: Observable<Player[]> = new Observable();
-  displayedColumns: string[] = ['Name', 'Surname', 'Nationality', 'Overall'];
+  displayedColumns: string[] = [
+    'Name',
+    'Surname',
+    'Nationality',
+    'Overall',
+    'Action',
+  ];
   player: Player = {} as Player;
+  players$: Observable<Player[]> = new Observable();
 
   ngOnInit(): void {
     this.players$ = this.playerService.getPlayers$();
@@ -35,10 +41,12 @@ export class PlayersPageComponent implements OnInit {
   addPlayer(player: Player) {
     this.playerService
       .addPlayer$(player)
-      .subscribe((x) => (this.players$ = this.playerService.getPlayers$()));
+      .subscribe(() => (this.players$ = this.playerService.getPlayers$()));
   }
 
-  deletePlayer() {
-    this.playerService.deletePlayer$();
+  deletePlayer(player: Player) {
+    this.playerService
+      .deletePlayer$(player.id)
+      .subscribe(() => (this.players$ = this.playerService.getPlayers$()));
   }
 }

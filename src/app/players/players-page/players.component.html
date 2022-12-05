@@ -2,12 +2,6 @@
     <button mat-raised-button (click)="openDialog()" class="demo-button">
       Add Player
     </button>
-    <button
-        mat-raised-button
-        (click)="deletePlayer()"
-        class="demo-button">
-      Delete Player
-    </button>
 </div>
 <table mat-table [dataSource]="players$" class="mat-elevation-z8">
       <ng-container matColumnDef="Name">
@@ -28,6 +22,17 @@
       <ng-container matColumnDef="Overall">
         <th mat-header-cell *matHeaderCellDef> Overall </th>
         <td mat-cell *matCellDef="let player"> {{player.overall}} </td>
+      </ng-container>
+
+      <ng-container matColumnDef="Action">
+        <th mat-header-cell *matHeaderCellDef> Action </th>
+        <td mat-cell *matCellDef="let player">
+          <div class="actions">
+            <mat-icon (click)="deletePlayer(player)">delete</mat-icon>
+            <mat-icon>edit</mat-icon> 
+          </div>
+          
+        </td>
       </ng-container>
 
       <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>

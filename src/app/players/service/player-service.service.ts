@@ -16,7 +16,7 @@ export class PlayerService {
     return this.httpClient.post<Player>(this.PLAYERS_API_PATH, player);
   }
 
-  public deletePlayer$() {
-    //this.httpClient.delete(`this.PLAYERS_API_PATH/${id}`);
+  public deletePlayer$(id: number): Observable<any> {
+    return this.httpClient.delete(this.PLAYERS_API_PATH + '/' + id);
   }
 }
