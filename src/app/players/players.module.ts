@@ -10,6 +10,7 @@ import { PlayerDialogComponent } from './components/player-dialog/player-dialog.
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { FormsModule } from '@angular/forms';
 import { MatIconModule } from '@angular/material/icon';
+import { MatTooltipModule } from '@angular/material/tooltip';
 
 @NgModule({
   declarations: [PlayersPageComponent, PlayerDialogComponent],
@@ -23,6 +24,7 @@ import { MatIconModule } from '@angular/material/icon';
     MatFormFieldModule,
     FormsModule,
     MatIconModule,
+    MatTooltipModule,
   ],
   exports: [PlayersPageComponent],
 })

@@ -8,10 +8,15 @@ import { Player } from '../../models/player.model';
   styleUrls: ['./player-dialog.component.css'],
 })
 export class PlayerDialogComponent {
+  player: Player = {} as Player;
+  isEdit = false;
   constructor(
     public dialogRef: MatDialogRef<PlayerDialogComponent>,
-    @Inject(MAT_DIALOG_DATA) public player: Player
-  ) {}
+    @Inject(MAT_DIALOG_DATA) public data: any
+  ) {
+    this.player = data.player;
+    this.isEdit = data.isEdit;
+  }
 
   onNoClick(): void {
     this.dialogRef.close();

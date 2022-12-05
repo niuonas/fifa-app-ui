@@ -21,6 +21,7 @@ export class PlayersPageComponent implements OnInit {
   ];
   player: Player = {} as Player;
   players$: Observable<Player[]> = new Observable();
+  isEdit = false;
 
   ngOnInit(): void {
     this.players$ = this.playerService.getPlayers$();
@@ -29,12 +30,26 @@ export class PlayersPageComponent implements OnInit {
   openDialog(): void {
     const dialogRef = this.dialog.open(PlayerDialogComponent, {
       width: '250px',
-      data: this.player,
+      data: {
+        player: this.player,
+        isEdit: this.isEdit,
+      },
     });
 
     dialogRef.afterClosed().subscribe((result) => {
-      this.player = result;
-      this.addPlayer(this.player);
+      if (result) {
+        if (this.isEdit) {
+          this.playerService
+            .editPlayer$(result)
+            .subscribe(
+              () => (this.players$ = this.playerService.getPlayers$())
+            );
+        } else {
+          this.addPlayer(result);
+        }
+      }
+      this.isEdit = false;
+      this.player = {} as Player;
     });
   }
 
@@ -48,5 +63,11 @@ export class PlayersPageComponent implements OnInit {
     this.playerService
       .deletePlayer$(player.id)
       .subscribe(() => (this.players$ = this.playerService.getPlayers$()));
+  }
+
+  editPlayer(player: Player) {
+    this.isEdit = true;
+    this.player = player;
+    this.openDialog();
   }
 }

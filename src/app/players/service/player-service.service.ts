@@ -19,4 +19,8 @@ export class PlayerService {
   public deletePlayer$(id: number): Observable<any> {
     return this.httpClient.delete(this.PLAYERS_API_PATH + '/' + id);
   }
+
+  public editPlayer$(player: Player): Observable<any> {
+    return this.httpClient.patch(this.PLAYERS_API_PATH, player);
+  }
 }
