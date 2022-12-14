@@ -2,6 +2,9 @@
     <button mat-raised-button (click)="openDialog()" class="demo-button">
       Add Player
     </button>
+    <button mat-raised-button (click)="addPlayerFast()" class="demo-button">
+      Fast Add
+    </button>
 </div>
 <table mat-table [dataSource]="players$" class="mat-elevation-z8">
       <ng-container matColumnDef="Name">

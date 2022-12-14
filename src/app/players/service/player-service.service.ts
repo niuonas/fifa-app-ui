@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { HttpClient, HttpHeaders } from '@angular/common/http';
+import { HttpClient } from '@angular/common/http';
 import { Observable } from 'rxjs';
 import { Player } from '../models/player.model';
 
@@ -16,11 +16,15 @@ export class PlayerService {
     return this.httpClient.post<Player>(this.PLAYERS_API_PATH, player);
   }
 
+  public addPlayerFast$(): Observable<Player> {
+    return this.httpClient.post<Player>(this.PLAYERS_API_PATH + '/fast', null);
+  }
+
   public deletePlayer$(id: number): Observable<any> {
     return this.httpClient.delete(this.PLAYERS_API_PATH + '/' + id);
   }
 
-  public editPlayer$(player: Player): Observable<any> {
-    return this.httpClient.patch(this.PLAYERS_API_PATH, player);
+  public editPlayer$(id: number, player: Player): Observable<any> {
+    return this.httpClient.patch(this.PLAYERS_API_PATH + '/' + id, player);
   }
 }

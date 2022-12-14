@@ -1,4 +1,4 @@
-import { Component, OnInit, ViewChild } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
 import { Observable } from 'rxjs';
 import { PlayerDialogComponent } from '../components/player-dialog/player-dialog.component';
@@ -40,7 +40,7 @@ export class PlayersPageComponent implements OnInit {
       if (result) {
         if (this.isEdit) {
           this.playerService
-            .editPlayer$(result)
+            .editPlayer$(result.id, result)
             .subscribe(
               () => (this.players$ = this.playerService.getPlayers$())
             );
@@ -56,6 +56,12 @@ export class PlayersPageComponent implements OnInit {
   addPlayer(player: Player) {
     this.playerService
       .addPlayer$(player)
+      .subscribe(() => (this.players$ = this.playerService.getPlayers$()));
+  }
+
+  addPlayerFast() {
+    this.playerService
+      .addPlayerFast$()
       .subscribe(() => (this.players$ = this.playerService.getPlayers$()));
   }
 
