@@ -1,1 +1,11 @@
+<mat-toolbar class="toolbar" color="primary">
+    <button mat-icon-button [matMenuTriggerFor]="menu" aria-label="Menu">
+        <mat-icon>menu</mat-icon>
+    </button>
+    <mat-menu #menu="matMenu">
+        <button mat-menu-item (click)="navigateToPlayers()">Players</button>
+        <button mat-menu-item (click)="navigateToTeams()">Teams</button>
+    </mat-menu>
+    <span class="title">{{title}}</span>
+</mat-toolbar>
 <router-outlet></router-outlet>
