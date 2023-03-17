@@ -1,3 +1,4 @@
+import { TeamsModule } from './teams/teams.module';
 import { NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
 
@@ -16,6 +17,7 @@ import { HomePageComponent } from './home-page/home-page.component';
     BrowserModule,
     AppRoutingModule,
     PlayersModule,
+    TeamsModule,
     MatToolbarModule,
     MatMenuModule,
     MatIconModule,

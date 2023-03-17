@@ -1,6 +1,6 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, OnDestroy } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
-import { Observable } from 'rxjs';
+import { Observable, Subscription } from 'rxjs';
 import { PlayerDialogComponent } from '../components/player-dialog/player-dialog.component';
 import { Player } from '../models/player.model';
 import { PlayerService } from '../service/player-service.service';
@@ -9,7 +9,7 @@ import { PlayerService } from '../service/player-service.service';
   templateUrl: './players.component.html',
   styleUrls: ['./players.component.css'],
 })
-export class PlayersPageComponent implements OnInit {
+export class PlayersPageComponent implements OnInit, OnDestroy {
   constructor(private playerService: PlayerService, public dialog: MatDialog) {}
 
   displayedColumns: string[] = [
@@ -22,9 +22,20 @@ export class PlayersPageComponent implements OnInit {
   player: Player = {} as Player;
   players$: Observable<Player[]> = new Observable();
   isEdit = false;
+  subAdd: Subscription = {} as Subscription;
+  subEdit: Subscription = {} as Subscription;
+  subAddFast: Subscription = {} as Subscription;
+  subDelete: Subscription = {} as Subscription;
 
   ngOnInit(): void {
     this.players$ = this.playerService.getPlayers$();
+  }
+
+  ngOnDestroy(): void {
+    this.subAdd.unsubscribe();
+    this.subAddFast.unsubscribe();
+    this.subEdit.unsubscribe();
+    this.subDelete.unsubscribe();
   }
 
   openDialog(): void {
@@ -39,7 +50,7 @@ export class PlayersPageComponent implements OnInit {
     dialogRef.afterClosed().subscribe((result) => {
       if (result) {
         if (this.isEdit) {
-          this.playerService
+          this.subEdit = this.playerService
             .editPlayer$(result.id, result)
             .subscribe(
               () => (this.players$ = this.playerService.getPlayers$())
@@ -54,19 +65,19 @@ export class PlayersPageComponent implements OnInit {
   }
 
   addPlayer(player: Player) {
-    this.playerService
+    this.subAdd = this.playerService
       .addPlayer$(player)
       .subscribe(() => (this.players$ = this.playerService.getPlayers$()));
   }
 
   addPlayerFast() {
-    this.playerService
+    this.subAddFast = this.playerService
       .addPlayerFast$()
       .subscribe(() => (this.players$ = this.playerService.getPlayers$()));
   }
 
   deletePlayer(player: Player) {
-    this.playerService
+    this.subDelete = this.playerService
       .deletePlayer$(player.id)
       .subscribe(() => (this.players$ = this.playerService.getPlayers$()));
   }
