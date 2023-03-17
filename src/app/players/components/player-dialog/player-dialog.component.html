@@ -1,17 +1,20 @@
 <div mat-dialog-content>
     <h1 mat-dialog-title> Enter data for the new player: </h1>
     <mat-label>Name</mat-label>
-    <input matInput [(ngModel)]="player.name">
+    <input required matInput [(ngModel)]="player.name" #name="ngModel">
     <mat-label>Surname</mat-label>
-    <input matInput [(ngModel)]="player.surname">
+    <input required matInput [(ngModel)]="player.surname" #surname="ngModel">
     <mat-label>Nationality</mat-label>
-    <input matInput [(ngModel)]="player.nationality">
+    <input required matInput [(ngModel)]="player.nationality" #nationality="ngModel">
     <mat-label>Overall</mat-label>
-    <input matInput [(ngModel)]="player.overall">
+    <input required matInput [(ngModel)]="player.overall" #overall="ngModel">
 </div>
 <div mat-dialog-actions>
     <button mat-button (click)="onNoClick()">Cancel</button>
-    <button mat-button [hidden]="isEdit" [mat-dialog-close]="player">Add</button>
+    <button *ngIf="!name.errors?.['required'] && 
+                   !surname.errors?.['required'] && 
+                   !nationality.errors?.['required'] && 
+                   !overall.errors?.['required']" mat-button [hidden]="isEdit" [mat-dialog-close]="player">Add</button>
     <button *ngIf="isEdit" mat-button [mat-dialog-close]="player">Edit</button>
 </div>
 

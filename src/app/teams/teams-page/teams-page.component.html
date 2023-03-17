@@ -1,1 +1,20 @@
-<p>teams-page works!</p>
+<table mat-table [dataSource]="teams$" class="mat-elevation-z8">
+    <ng-container matColumnDef="Name">
+      <th mat-header-cell *matHeaderCellDef> Name </th>
+      <td mat-cell *matCellDef="let team"> {{team.name}} </td>
+    </ng-container>
+
+    <ng-container matColumnDef="Players">
+      <th mat-header-cell *matHeaderCellDef> Players </th>
+      <td mat-cell *matCellDef="let team"> 
+        <ng-container *ngFor="let player of team.players">
+          {{player.surname + " " +  player.name}}
+          <br>
+        </ng-container>
+        <button mat-raised-button (click)="openDialog(team)" class="demo-button">Add Player</button>
+      </td>
+    </ng-container>
+
+    <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+    <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+</table>
